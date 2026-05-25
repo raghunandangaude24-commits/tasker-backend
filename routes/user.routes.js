@@ -34,7 +34,7 @@ router.put("/settings", auth, async (req, res) => {
 
         const {
 
-            name,
+            username,
             email,
             password,
             emailNotifications,
@@ -53,7 +53,8 @@ router.put("/settings", auth, async (req, res) => {
         }
 
 
-        user.name = name ?? user.name;
+        // FIXED FIELD NAME
+        user.username = username ?? user.username;
 
         user.email = email ?? user.email;
 
@@ -70,7 +71,8 @@ router.put("/settings", auth, async (req, res) => {
 
             const salt = await bcrypt.genSalt(10);
 
-            user.password = await bcrypt.hash(password, salt);
+            user.password =
+                await bcrypt.hash(password, salt);
         }
 
         await user.save();
